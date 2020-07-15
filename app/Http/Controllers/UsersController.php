@@ -18,11 +18,19 @@ class UsersController extends Controller
 
     public function store(Request $request)
     {
-        $validate = $this->validate($request,[
+        $this->validate($request,[
             'name'=>'required|max:50|unique:users',
             'email'=>'required|email|max:255|unique:users',
-            'password'=>'required|confirm|min:6'
+            'password'=>'required|confirmed|min:6'
         ]);
-        return;
+
+        $user = User::create([
+            'name'=>$request->name,
+            'email'=>$request->email,
+            'password'=>bcrypt($request->password),
+        ]);
+        session()->flash('success','恭喜您注册成功！您将开启一段新的旅程！');
+
+        return redirect()->route('users.show',[$user]);
     }
 }
