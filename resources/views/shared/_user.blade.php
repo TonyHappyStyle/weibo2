@@ -4,7 +4,7 @@
         {{ $user->name }}
     </a>
     @can('destroy',$user)
-        <form method="post" action="{{ route('users.destroy',$user) }}" class="float-right" onsubmit="confirm('确定要删除{{ $user->name }}？');">
+        <form method="post" action="{{ route('users.destroy',$user) }}" class="float-right" onsubmit=" return confirm('确定要删除{{ $user->name }}？');">
             {{ csrf_field() }}
             {{ method_field('DELETE') }}
             <button type="submit" class="btn btn-sm btn-danger delete-btn">删除</button>
